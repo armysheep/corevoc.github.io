@@ -1,166 +1,178 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>填空式英文單字複習</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-			font-size:	50px
-        }
-        input[type="text"] {
-            margin-top: 20px;
-            padding: 20px;
-            font-size: 30px;
-        }
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-    </style>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>填空式英文單字複習</title>
+	<style>
+	       body {
+	           font-family: Arial, sans-serif;
+	           text-align: center;
+	           margin-top: 50px;
+	           font-size:  30px
+	       }
+	       button {
+	           font-size: 20px; /* 調整按鈕文字大小 */
+	           padding: 20px 40px; /* 調整按鈕內邊距 */
+	       }
+	       input[type="text"] {
+	           margin-top: 20px;
+	           padding: 20px;
+	           font-size: 30px;
+	       }
+	       #result {
+	           margin-top: 20px;
+	           font-weight: bold;
+	       }
+	</style>
 </head>
+
 <body>
-    <h2>這!是!核心單字複習(?第一版</h2>
-    <div id="word-container">
-        <p id="word"></p>
-        <input type="text" id="answer" placeholder="請輸入單字（大小寫皆可)">
-        <button onclick="checkAnswer()">確認答案</button>
-        <p id="result"></p>
-    </div>
+	<h2>這!是!核心單字複習(?第一版</h2>
+
+
+	<div id="word-container">
+		<p id="word">
+		</p>
+		<input id="answer" placeholder="請輸入單字（大小寫皆可)" type="text"> <button onclick="checkAnswer()">確認答案</button>
+
+		<p id="result">
+		</p>
+	</div>
+
+
 	<div id="scoreboard">
 		<p>Score: <span id="score">0</span></p>
 	</div>
+	<script>
+	       const words = [
+	           { chinese: "特定的", english: "specific" },
+	           { chinese: "分析", english: "analyze" },
+	           { chinese: "位置", english: "location" },
+	           { chinese: "遠端的", english: "remote" },
+	           { chinese: "認識", english: "recognize" },
+	           { chinese: "和諧", english: "harmony" },
+	           { chinese: "確定", english: "determine" },
+	           { chinese: "準確度", english: "accuracy" },
+	           { chinese: "變化", english: "vary" },
+	           { chinese: "稀有的", english: "rare" },
+	           { chinese: "場合", english: "occasion" },
+	           { chinese: "合作", english: "cooperate" },
+	           { chinese: "交換", english: "exchange" },
+	           { chinese: "忽視", english: "ignore" },
+	           { chinese: "功能", english: "function" },
+	           { chinese: "領土", english: "territory" },
+	           { chinese: "存活", english: "survive" },
+	           { chinese: "識別", english: "identify" },
+	           { chinese: "證據", english: "evidence" },
+	           { chinese: "能力", english: "capacity" },
+	           { chinese: "演示", english: "demonstrate" },
+	           { chinese: "搔癢", english: "scratch" },
+	           { chinese: "電影院", english: "cinema" },
+	           { chinese: "必要的", english: "essential" },
+	           { chinese: "娛樂", english: "entertainment" },
+	           { chinese: "直接的", english: "direct" },
+	           { chinese: "沉默", english: "silence" },
+	           { chinese: "公平的", english: "fair" },
+	           { chinese: "舞台", english: "stage" },
+	           { chinese: "發明家", english: "inventor" },
+	           { chinese: "適當的", english: "proper" },
+	           { chinese: "十年", english: "decade" },
+	           { chinese: "幾乎", english: "nearly" },
+	           { chinese: "對話", english: "dialogue" },
+	           { chinese: "激勵", english: "inspire" },
+	           { chinese: "創造力", english: "creativity" },
+	           { chinese: "事業", english: "career" },
+	           { chinese: "名聲", english: "fame" },
+	           { chinese: "困境", english: "hardship" },
+	           { chinese: "戲劇性地", english: "dramatically" },
+	           { chinese: "轉換", english: "switch" },
+	           { chinese: "出現", english: "emergence" },
+	           { chinese: "依賴的", english: "dependent" },
+	           { chinese: "想像", english: "imagine" },
+	           { chinese: "電子產品", english: "electronics" },
+	           { chinese: "先進的", english: "advanced" },
+	           { chinese: "商業的", english: "commercial" },
+	           { chinese: "技術上", english: "technically" },
+	           { chinese: "助理", english: "assistant" },
+	           { chinese: "裝置", english: "device" },
+	           { chinese: "模仿", english: "imitate" },
+	           { chinese: "發明", english: "invent" },
+	           { chinese: "進一步研究", english: "further research" },
+	           { chinese: "結合", english: "combination" },
+	           { chinese: "實際的", english: "practical" },
+	           { chinese: "時尚的", english: "fashionable" },
+	           { chinese: "教育", english: "educate" },
+	           { chinese: "娛樂", english: "entertain" },
+	           { chinese: "增長", english: "growth" },
+	           { chinese: "促進", english: "promote" },
+	           { chinese: "方便的", english: "handy" },
+	           { chinese: "微波爐", english: "microwave" },
+	           { chinese: "額外的", english: "extra" },
+	           { chinese: "典型地", english: "typically" },
+	           { chinese: "設計", english: "design" },
+	           { chinese: "激勵", english: "motivate" },
+	           { chinese: "理想的", english: "ideal" },
+	           { chinese: "任務", english: "task" },
+	           { chinese: "拖曳", english: "drag" },
+	           { chinese: "特別", english: "especially" },
+	           { chinese: "黏的", english: "sticky" },
+	           { chinese: "灰塵", english: "dust" },
+	           { chinese: "鍵盤", english: "keyboard" },
+	           { chinese: "拋光", english: "polish" },
+	           { chinese: "分發", english: "distribute" },
+	           { chinese: "結合", english: "combine" },
+	           { chinese: "處理", english: "handle" },
+	           { chinese: "行李", english: "baggage" }
+	       ];
 
-    <script>
-        const words = [
-            { chinese: "特定的", english: "specific" },
-            { chinese: "分析", english: "analyze" },
-            { chinese: "位置", english: "location" },
-            { chinese: "遠端的", english: "remote" },
-            { chinese: "認識", english: "recognize" },
-            { chinese: "和諧", english: "harmony" },
-            { chinese: "確定", english: "determine" },
-            { chinese: "準確度", english: "accuracy" },
-            { chinese: "變化", english: "vary" },
-            { chinese: "稀有的", english: "rare" },
-            { chinese: "場合", english: "occasion" },
-            { chinese: "合作", english: "cooperate" },
-            { chinese: "交換", english: "exchange" },
-            { chinese: "忽視", english: "ignore" },
-            { chinese: "功能", english: "function" },
-            { chinese: "領土", english: "territory" },
-            { chinese: "存活", english: "survive" },
-            { chinese: "識別", english: "identify" },
-            { chinese: "證據", english: "evidence" },
-            { chinese: "能力", english: "capacity" },
-            { chinese: "演示", english: "demonstrate" },
-            { chinese: "搔癢", english: "scratch" },
-			{ chinese: "電影院", english: "cinema" },
-			{ chinese: "必要的", english: "essential" },
-			{ chinese: "娛樂", english: "entertainment" },
-			{ chinese: "直接的", english: "direct" },
-			{ chinese: "沉默", english: "silence" },
-			{ chinese: "公平的", english: "fair" },
-			{ chinese: "舞台", english: "stage" },
-			{ chinese: "發明家", english: "inventor" },
-			{ chinese: "適當的", english: "proper" },
-			{ chinese: "十年", english: "decade" },
-			{ chinese: "幾乎", english: "nearly" },
-			{ chinese: "對話", english: "dialogue" },
-			{ chinese: "激勵", english: "inspire" },
-			{ chinese: "創造力", english: "creativity" },
-			{ chinese: "事業", english: "career" },
-			{ chinese: "名聲", english: "fame" },
-			{ chinese: "困境", english: "hardship" },
-			{ chinese: "戲劇性地", english: "dramatically" },
-			{ chinese: "轉換", english: "switch" },
-			{ chinese: "出現", english: "emergence" },
-			{ chinese: "依賴的", english: "dependent" },
-			{ chinese: "想像", english: "imagine" },
-			{ chinese: "電子產品", english: "electronics" },
-			{ chinese: "先進的", english: "advanced" },
-			{ chinese: "商業的", english: "commercial" },
-			{ chinese: "技術上", english: "technically" },
-			{ chinese: "助理", english: "assistant" },
-			{ chinese: "裝置", english: "device" },
-			{ chinese: "模仿", english: "imitate" },
-			{ chinese: "發明", english: "invent" },
-			{ chinese: "進一步研究", english: "further research" },
-			{ chinese: "結合", english: "combination" },
-			{ chinese: "實際的", english: "practical" },
-			{ chinese: "時尚的", english: "fashionable" },
-			{ chinese: "教育", english: "educate" },
-			{ chinese: "娛樂", english: "entertain" },
-			{ chinese: "增長", english: "growth" },
-			{ chinese: "促進", english: "promote" },
-			{ chinese: "方便的", english: "handy" },
-			{ chinese: "微波爐", english: "microwave" },
-			{ chinese: "額外的", english: "extra" },
-			{ chinese: "典型地", english: "typically" },
-			{ chinese: "設計", english: "design" },
-			{ chinese: "激勵", english: "motivate" },
-			{ chinese: "理想的", english: "ideal" },
-			{ chinese: "任務", english: "task" },
-			{ chinese: "拖曳", english: "drag" },
-			{ chinese: "特別", english: "especially" },
-			{ chinese: "黏的", english: "sticky" },
-			{ chinese: "灰塵", english: "dust" },
-			{ chinese: "鍵盤", english: "keyboard" },
-			{ chinese: "拋光", english: "polish" },
-			{ chinese: "分發", english: "distribute" },
-			{ chinese: "結合", english: "combine" },
-			{ chinese: "處理", english: "handle" },
-			{ chinese: "行李", english: "baggage" }
-        ];
+	       let currentWordIndex = 0;
+	       let score = 0;
+	       
+	       function updateScore(points) {
+	           score += points;
+	           document.getElementById("score").textContent = score;
+	       }
 
-        let currentWordIndex = 0;
-		let score = 0;
-		
-		function updateScore(points) {
-			score += points;
-			document.getElementById("score").textContent = score;
-		}
+	       function checkAnswer() {
+	           const input = document.getElementById("answer").value.trim().toLowerCase();
+	           const correctAnswer = words[currentWordIndex].english;
 
-        function checkAnswer() {
-            const input = document.getElementById("answer").value.trim().toLowerCase();
-            const correctAnswer = words[currentWordIndex].english;
+	           if (input === correctAnswer) {
+	               document.getElementById("result").textContent = "答對了！";
+	               updateScore(5);
+	               currentWordIndex++;
+	               if (currentWordIndex < words.length) {
+	                   displayWord();
+	               } else {
+	                   document.getElementById("word-container").innerHTML = "<p>恭喜你完成了所有單字的複習！<\/p>";
+	               }
+	           } else {
+	               updateScore(-2);
+	               document.getElementById("result").textContent = "答錯了，請再試一次。";
+	           }
+	       }
 
-            if (input === correctAnswer) {
-                document.getElementById("result").textContent = "答對了！";
-				updateScore(5);
-                currentWordIndex++;
-                if (currentWordIndex < words.length) {
-                    displayWord();
-                } else {
-                    document.getElementById("word-container").innerHTML = "<p>恭喜你完成了所有單字的複習！</p>";
-                }
-            } else {
-				updateScore(-2);
-                document.getElementById("result").textContent = "答錯了，請再試一次。";
-            }
-        }
+	       function displayWord() {
+	           const wordElement = document.getElementById("word");
+	           const word = words[currentWordIndex];
+	           wordElement.textContent = `${word.chinese} (${word.english[0]} _ _ _ _ _ _ ${word.english[word.english.length - 1]})`;
+	           document.getElementById("answer").value = "";
+	           document.getElementById("result").textContent = "";
+	           
+	           /*if (currentWordIndex === words.length - 1) {
+	               // 如果是最後一個單字，顯示恭喜訊息並更新分數板
+	               document.getElementById("answer").disabled = true;
+	               document.getElementById("check-button").disabled = true;
+	               document.getElementById("word-container").innerHTML = "<p>恭喜你完成了所有單字的複習！<\/p>";
+	               updateScore(5); // 完成所有單字加5分
+	           }*/
+	       }
 
-        function displayWord() {
-            const wordElement = document.getElementById("word");
-            const word = words[currentWordIndex];
-            wordElement.textContent = `${word.chinese} (${word.english[0]} _ _ _ _ _ _ ${word.english[word.english.length - 1]})`;
-            document.getElementById("answer").value = "";
-            document.getElementById("result").textContent = "";
-			
-			/*if (currentWordIndex === words.length - 1) {
-				// 如果是最後一個單字，顯示恭喜訊息並更新分數板
-				document.getElementById("answer").disabled = true;
-				document.getElementById("check-button").disabled = true;
-				document.getElementById("word-container").innerHTML = "<p>恭喜你完成了所有單字的複習！</p>";
-				updateScore(5); // 完成所有單字加5分
-			}*/
-        }
-
-        // 初始化顯示第一個單字
-        displayWord();
-    </script>
+	       // 初始化顯示第一個單字
+	       displayWord();
+	</script>
 </body>
 </html>
